@@ -1,0 +1,5 @@
+var Config = {
+  firebaseUrl: 'url_string'
+}
+
+module.exports = Config;
