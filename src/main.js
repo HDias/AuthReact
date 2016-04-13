@@ -6,11 +6,13 @@ import React, {
 
 import SignIn from './components/authentication/signin';
 import SignUp from './components/authentication/signup';
+import Tweets from './components/tweets/tweets';
 
 const ROUTES = {
   // Rota : Component
   signin: SignIn,
-  signup: SignUp
+  signup: SignUp,
+  tweets: Tweets
 }
 
 class Main extends Component {

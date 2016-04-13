@@ -1,5 +1,5 @@
-// Aula 55
 import React, {
+  AsyncStorage,
   Component,
   View,
   StyleSheet,
@@ -18,6 +18,7 @@ class SignIn extends Component {
     this.state = {
       username: '',
       password: '',
+      passwordConfirmation: '',
       loginError: '',
     }
 
@@ -60,7 +61,7 @@ class SignIn extends Component {
   onPress() {
     this.setState({
       loginError: ''
-    })
+    });
 
     this.myFirebaseRef.authWithPassword({
       email    : this.state.username,
@@ -70,25 +71,28 @@ class SignIn extends Component {
         switch (error.code) {
           case "INVALID_EMAIL":
             this.setState({
-              loginError: 'The specified user account email is invalid.'
+              loginError: 'Digite um email válido.'
             });
             break;
           case "INVALID_PASSWORD":
             this.setState({
-              loginError: 'The specified user account password is incorrect.'
+              loginError: 'Senha incorreta! Tente novamente;'
             });
             break;
           case "INVALID_USER":
             this.setState({
-              loginError: 'The specified user account does not exist.'
+              loginError: 'Usuário não existe'
             });
             break;
           default:
             this.setState({
-              loginError: 'Error logging user in:" + error.message'
+              loginError: 'Erro ao logar:' + error.message
             });
         }
       } else {
+        AsyncStorage.setItem('user', JSON.stringify(authData));
+
+        this.props.navigator.immediatelyResetRouteStack([{ name: 'tweets' }]);
         console.log('Authenticated successfully with payload:', authData);
       }
     });
